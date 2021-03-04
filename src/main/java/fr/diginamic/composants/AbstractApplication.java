@@ -19,8 +19,6 @@ import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 
-import fr.diginamic.composants.reflect.ReflectUtils;
-
 /** Application mère de type SWING.
  * @author RichardBONNAMY
  *
@@ -147,10 +145,10 @@ public abstract class AbstractApplication extends JFrame {
 		HTMLDocument htmlDocument = (HTMLDocument) htmlEditorKit.createDefaultDocument();
 		StyleSheet style = htmlDocument.getStyleSheet();
 		htmlEditorKit.setStyleSheet(style);
-		style.addRule("body { font-family:'Arial';}");
+		style.addRule("body { font-family:'Arial'; color:#000000;}");
 		
-		style.addRule("table { border: solid 0px black;border-spacing:0px;border-margin:0px;}");
-		style.addRule("td { border: solid 1px black; padding-top:0px; padding-bottom:0px; padding-left:4px;padding-right:4px;}");
+		style.addRule(".table { border: solid 0px black;border-spacing:0px;border-margin:0px;}");
+		style.addRule(".table td { border: solid 1px black; padding-top:0px; padding-bottom:0px; padding-left:4px;padding-right:4px;}");
 		
 		style.addRule(".bg-dark-blue { color: #FFFFFF; background: #0C0F46; font-weight:bold; }");
 		style.addRule(".bg-blue { color: #FFFFFF; background: #007bff; font-weight:bold; }");

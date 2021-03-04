@@ -43,7 +43,7 @@ public class Exemple5Service extends MenuService {
 		console.clear();
 		console.print("<h1 class='bg-green'><center>Liste des clients</center></h1>");
 
-		String html = "<table cellspacing=0>"
+		String html = "<table class='table' cellspacing=0>"
 				+ "<tr class='bg-green'><td>&nbsp;</td><td>&nbsp;</td><td>Nom</td><td>Prénom</td></tr>";
 		for (Personne c : clients) {
 			html += "<tr>"
@@ -56,6 +56,11 @@ public class Exemple5Service extends MenuService {
 		html += "</table>";
 
 		console.print(html);
+		console.print("<table><tr><td>Ajouter un client</td><td><a class='btn-blue' href='ajouter()'><img width=25 src='images/plus-blue.png'></a></td></tr></table>");
+	}
+	
+	public void ajouter() {
+		console.print("Appel de la méthode ajouter");
 	}
 
 	/** Méthode appelée lorsque l'utilisateur clique sur une icone de modification
