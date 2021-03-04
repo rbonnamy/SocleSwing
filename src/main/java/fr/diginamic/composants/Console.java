@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +19,8 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.html.HTMLDocument;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -25,6 +28,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import fr.diginamic.Launcher;
+import fr.diginamic.composants.error.ErrorManager;
 import fr.diginamic.composants.html.HtmlUtils;
 import fr.diginamic.composants.ui.Form;
 import fr.diginamic.composants.ui.Input;
@@ -420,9 +424,8 @@ public class Console {
 				textModifie = doc.body().ownText()+" "+doc.body().children().toString();
 			}
 		}
-		
+		appendToPane(textModifie);
 		contentpane.append(textModifie);
-		afficheur.setText(contentpane.toString());
 		return this;
 	}
 
@@ -479,6 +482,20 @@ public class Console {
 	public void clear() {
 		contentpane = new StringBuilder();
 		afficheur.setText("");
+	}
+	
+	/** Ajoute du HTML dans le panneau
+	 * @param html html
+	 * @return Console
+	 */
+	protected Console appendToPane(String html) {
+		HTMLDocument doc=(HTMLDocument) afficheur.getStyledDocument();
+		try {
+			doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()), html);
+		} catch (IOException | BadLocationException e) {
+			ErrorManager.manage(e.getMessage(), e);
+		} 
+		return this;
 	}
 
 }

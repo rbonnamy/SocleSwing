@@ -10,7 +10,7 @@ public class Exemple2Service extends MenuService {
 	public void traitement() {
 		console.clear();
 		
-		console.print("<h1 class='bg-dark-blue'><center>Exemple fond bleu foncé</center></h1>");
+		console.println("<h1 class='bg-dark-blue'><center>Exemple fond bleu foncé</center></h1>");
 		
 		console.println("Texte");
 		console.println("Texte en rouge", Color.RED);

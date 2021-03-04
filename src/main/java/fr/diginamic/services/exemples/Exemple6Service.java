@@ -18,7 +18,7 @@ public class Exemple6Service extends MenuService {
 	public void traitement() {
 
 		console.clear();
-		console.print("<h1 class='bg-turquoise'><center>Titre avec fond bleu clair</center></h1>");
+		console.println("<h1 class='bg-turquoise'><center>Titre avec fond bleu clair</center></h1>");
 
 		// On commence par créér le formulaire vide
 		Form form = new Form();

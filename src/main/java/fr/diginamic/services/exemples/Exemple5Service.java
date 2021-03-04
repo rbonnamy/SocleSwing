@@ -1,6 +1,5 @@
 package fr.diginamic.services.exemples;
 
-import java.awt.Color;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -41,7 +40,7 @@ public class Exemple5Service extends MenuService {
 		List<Personne> clients = query.getResultList();
 
 		console.clear();
-		console.print("<h1 class='bg-green'><center>Liste des clients</center></h1>");
+		console.println("<h1 class='bg-green'><center>Liste des clients</center></h1>");
 
 		String html = "<table class='table' cellspacing=0>"
 				+ "<tr class='bg-green'><td>&nbsp;</td><td>&nbsp;</td><td>Nom</td><td>Prénom</td></tr>";
@@ -55,12 +54,12 @@ public class Exemple5Service extends MenuService {
 		}
 		html += "</table>";
 
-		console.print(html);
-		console.print("<table><tr><td>Ajouter un client</td><td><a class='btn-blue' href='ajouter()'><img width=25 src='images/plus-blue.png'></a></td></tr></table>");
+		console.println(html);
+		console.println("<table><tr><td>Ajouter un client</td><td><a class='btn-blue' href='ajouter()'><img width=25 src='images/plus-blue.png'></a></td></tr></table>");
 	}
 	
 	public void ajouter() {
-		console.print("Appel de la méthode ajouter");
+		console.println("Appel de la méthode ajouter");
 	}
 
 	/** Méthode appelée lorsque l'utilisateur clique sur une icone de modification
