@@ -10,6 +10,7 @@ import javax.swing.JComponent;
 import org.jdesktop.swingx.JXDatePicker;
 
 import fr.diginamic.composants.error.ErrorManager;
+import fr.diginamic.composants.ui.container.Input;
 
 /** Champ de saisie d'une date
  * @author RichardBONNAMY
@@ -43,10 +44,7 @@ public class DateField extends Input {
 		this.value=value;
 		this.format="dd/MM/yyyy";
 		setWidth(150);
-	}
-	
-	@Override
-	public JComponent convert() {
+		
 		picker = new JXDatePicker(Locale.FRANCE);
 		if (value!=null) {
 			SimpleDateFormat formatter = new SimpleDateFormat(format);
@@ -57,6 +55,15 @@ public class DateField extends Input {
 			}
 		}
 		picker.setFormats(new SimpleDateFormat(format));
+	}
+	
+	@Override
+	public int getHeight() {
+		return (int)picker.getPreferredSize().getHeight();
+	}
+	
+	@Override
+	public JComponent convert() {
 		return picker;
 	}
 	

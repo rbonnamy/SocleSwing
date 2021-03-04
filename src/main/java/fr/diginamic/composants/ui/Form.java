@@ -1,32 +1,41 @@
 package fr.diginamic.composants.ui;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
 
 import fr.diginamic.composants.error.ErrorManager;
-import fr.diginamic.composants.validator.FormValidator;
+import fr.diginamic.composants.ui.container.Col;
+import fr.diginamic.composants.ui.container.Container;
+import fr.diginamic.composants.ui.container.Input;
+import fr.diginamic.composants.ui.container.Row;
 
 /** Formulaire
  * @author RichardBONNAMY
  *
  */
-public class Form implements Iterable<Input> {
+public class Form implements Iterable<Row> {
 
-	/** Liste des champs de saisie */
-	private List<Input> inputs = new ArrayList<>();
+	/** container */
+	private Container container = new Container();
 	
 	/** Retourne un champ de saisie à partir de son nom
 	 * @param name nom du champ
 	 * @return {@link Input}
 	 */
 	public Input getInput(String name) {
-		Optional<Input> optional = inputs.stream().filter(i -> i.getName().equals(name)).findFirst();
+		Optional<Input> optional = container.getInputs().stream().filter(i -> i.getName().equals(name)).findFirst();
 		if (optional.isPresent()) {
 			return optional.get();
 		}
 		return null;
+	}
+	
+	public void addRow() {
+		container.addRow(new Row());
+	}
+	
+	public void addCol(int size) {
+		container.getLastRow().addCol(new Col(size));
 	}
 	
 	/** Ajoute un champ de saisie
@@ -36,10 +45,10 @@ public class Form implements Iterable<Input> {
 		if (input==null) {
 			ErrorManager.manage("Il est interdit d'ajouter un champ null dans le formulaire.");
 		}
-		else if (inputs.contains(input)) {
+		else if (container.getInputs().contains(input)) {
 			ErrorManager.manage("Il existe déjà un champ de saisie avec le nom "+input.getName()+" dans le formulaire.");
 		}
-		inputs.add(input);
+		container.getLastRow().getLastCol().addInput(input);
 	}
 
 	/** Retourne la valeur saisie pour un champ de saisie donné
@@ -54,25 +63,25 @@ public class Form implements Iterable<Input> {
 	 * @return int
 	 */
 	public int size() {
-		return inputs.size();
+		return container.getInputs().size();
 	}
 
 	@Override
-	public Iterator<Input> iterator() {
-		return inputs.iterator();
+	public Iterator<Row> iterator() {
+		return container.getRows().iterator();
 	}
 
 	/** Getter
-	 * @return the inputs
+	 * @return the container
 	 */
-	public List<Input> getInputs() {
-		return inputs;
+	public Container getContainer() {
+		return container;
 	}
 
 	/** Setter
-	 * @param inputs the inputs to set
+	 * @param container the container to set
 	 */
-	public void setInputs(List<Input> inputs) {
-		this.inputs = inputs;
+	public void setContainer(Container container) {
+		this.container = container;
 	}
 }

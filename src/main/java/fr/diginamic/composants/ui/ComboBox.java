@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 
+import fr.diginamic.composants.ui.container.Input;
+
 /** Liste de sélection
  * @author RichardBONNAMY
  *
@@ -18,6 +20,9 @@ public class ComboBox extends Input {
 	/** Item sélectionné par défaut */
 	private Selectable selectedItem;
 	
+	/** combobox */
+	private JComboBox<Selectable> combobox;
+	
 	/** value */
 	private Long id;
 	
@@ -29,6 +34,13 @@ public class ComboBox extends Input {
 	public ComboBox(String label, String name, List<Selectable> selectables) {
 		super(label, name);
 		this.selectables = selectables;
+		
+		combobox = new JComboBox<>();
+		for (Selectable selectable: selectables) {
+			combobox.addItem(selectable);
+		}
+		combobox.setSelectedItem(selectedItem);
+		combobox.setEditable(true);
 	}
 	
 	/** Constructeur
@@ -44,13 +56,12 @@ public class ComboBox extends Input {
 	}
 	
 	@Override
+	public int getHeight() {
+		return (int)combobox.getPreferredSize().getHeight();
+	}
+	
+	@Override
 	public JComponent convert() {
-		JComboBox<Selectable> combobox = new JComboBox<>();
-		for (Selectable selectable: selectables) {
-			combobox.addItem(selectable);
-		}
-		combobox.setSelectedItem(selectedItem);
-		combobox.setEditable(true);
 		return combobox;
 	}
 
@@ -96,4 +107,5 @@ public class ComboBox extends Input {
 	public void setSelectedItem(Selectable selectedItem) {
 		this.selectedItem = selectedItem;
 	}
+
 }

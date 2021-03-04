@@ -27,7 +27,8 @@ import org.jsoup.select.Elements;
 import fr.diginamic.Launcher;
 import fr.diginamic.composants.html.HtmlUtils;
 import fr.diginamic.composants.ui.Form;
-import fr.diginamic.composants.ui.Input;
+import fr.diginamic.composants.ui.container.Input;
+import fr.diginamic.composants.ui.container.Row;
 import fr.diginamic.composants.validator.FormValidator;
 
 /**
@@ -126,22 +127,22 @@ public class Console {
 
 		int maxInputWidth = 0;
 		int maxLabelWidth = 0;
-		for (Input input : form) {
-
-			// Nombre de carcatères dans le texte de la question
-			int nbCaracteres = input.getLabel().length();
-
-			// Largeur approximative en pixels du texte à afficher
-			int largeurLabel = nbCaracteres * 10 + 100;
-
-			// Recherche du texte le plus large parmi tous les textes des questions
-			if (largeurLabel > maxLabelWidth) {
-				maxLabelWidth = largeurLabel;
-			}
-			if (input.getWidth() > maxInputWidth) {
-				maxInputWidth = input.getWidth();
-			}
-		}
+//		for (Row row : form.getContainer().getRows()) {
+//			for (Col col: row.getCols()) {
+//			// Nombre de carcatères dans le texte de la question
+//			int nbCaracteres = input.getLabel().length();
+//
+//			// Largeur approximative en pixels du texte à afficher
+//			int largeurLabel = nbCaracteres * 10 + 100;
+//
+//			// Recherche du texte le plus large parmi tous les textes des questions
+//			if (largeurLabel > maxLabelWidth) {
+//				maxLabelWidth = largeurLabel;
+//			}
+//			if (input.getWidth() > maxInputWidth) {
+//				maxInputWidth = input.getWidth();
+//			}
+//		}
 
 		maxWidth = maxLabelWidth + maxInputWidth + 30;
 		// Calcul de son positionnement par défaut et de ses dimensions.
@@ -154,29 +155,29 @@ public class Console {
 		int y = Console.getY(fenetreRecherche);
 		fenetreRecherche.setLocation(x, y);
 
-		for (int i = 0; i < form.getInputs().size(); i++) {
-
-			Input input = form.getInputs().get(i);
-
-			// Création du label
-			JLabel label = new JLabel(input.getLabel());
-			label.setBounds(10, 18 + i * 30, maxLabelWidth, 20);
-			label.setFont(FONT_14);
-			fenetreRecherche.add(label);
-
-			JComponent component = input.convert();
-			int width = fenetreRecherche.getWidth() - maxLabelWidth - 40;
-			if (input.getWidth() > 0) {
-				width = input.getWidth();
-			}
-			component.setBounds(maxLabelWidth + 5, 12 + i * 30, width, 30);
-			component.setName(input.getName());
-
-			component.setFont(FONT_14);
-			fenetreRecherche.add(component);
-			fields.put(form.getInputs().get(i).getName(), component);
-
-		}
+//		for (int i = 0; i < form.getInputs().size(); i++) {
+//
+//			Input input = form.getInputs().get(i);
+//
+//			// Création du label
+//			JLabel label = new JLabel(input.getLabel());
+//			label.setBounds(10, 18 + i * 30, maxLabelWidth, 20);
+//			label.setFont(FONT_14);
+//			fenetreRecherche.add(label);
+//
+//			JComponent component = input.convert();
+//			int width = fenetreRecherche.getWidth() - maxLabelWidth - 40;
+//			if (input.getWidth() > 0) {
+//				width = input.getWidth();
+//			}
+//			component.setBounds(maxLabelWidth + 5, 12 + i * 30, width, 30);
+//			component.setName(input.getName());
+//
+//			component.setFont(FONT_14);
+//			fenetreRecherche.add(component);
+//			fields.put(form.getInputs().get(i).getName(), component);
+//
+//		}
 
 		// Création du bouton Valider
 		

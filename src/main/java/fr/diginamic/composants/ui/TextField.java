@@ -3,6 +3,8 @@ package fr.diginamic.composants.ui;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
+import fr.diginamic.composants.ui.container.Input;
+
 /** Champ de type texte pour saisir une information quelconque
  * @author RichardBONNAMY
  *
@@ -11,6 +13,9 @@ public class TextField extends Input {
 	
 	/** Valeur saisie par l'utilisateur */
 	private String value;
+	
+	/** textField */
+	private JTextField textField;
 
 	/** Constructeur
 	 * @param name nom du champ de saisie
@@ -30,6 +35,8 @@ public class TextField extends Input {
 	public TextField(String label, String name, String value) {
 		super(label, name);
 		this.value = value;
+		textField = new JTextField();
+		textField.setText(value);
 		setWidth(200);
 	}
 	
@@ -56,6 +63,11 @@ public class TextField extends Input {
 	@Override
 	public InputType getType() {
 		return InputType.TEXTFIELD;
+	}
+
+	@Override
+	public int getHeight() {
+		return (int)textField.getPreferredSize().getHeight();
 	}
 
 

@@ -8,6 +8,8 @@ public enum InputType {
 
 	/** DATEFIELD */
 	DATEFIELD, 
+	/** LABEL */
+	LABEL,
 	/** TEXTFIELD */
 	TEXTFIELD, 
 	/** SELECT */

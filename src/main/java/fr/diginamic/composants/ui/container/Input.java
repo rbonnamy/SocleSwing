@@ -1,14 +1,19 @@
-package fr.diginamic.composants.ui;
+package fr.diginamic.composants.ui.container;
 
 import javax.swing.JComponent;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+
+import fr.diginamic.composants.ui.InputType;
 
 /** Représente un champ du formulaire
  * @author RichardBONNAMY
  *
  */
 public abstract class Input {
+	
+	/** parent */
+	private Col parent;
 	
 	/** Libellé associé au champ de saisie */
 	private String label;
@@ -18,6 +23,12 @@ public abstract class Input {
 	
 	/** Largeur en pixels du champ de saisie */
 	private int width;
+	
+	/** Représente la position de l'input dans la colonne (dépend de l'orientation) */
+	private int posX;
+	
+	/** Représente la position de l'input dans la colonne (dépend de l'orientation) */
+	private int posY;
 
 	/** Constructeur
 	 * @param label libellé du champ de saisie
@@ -57,6 +68,36 @@ public abstract class Input {
 	 * @return {@link InputType}
 	 */
 	public abstract InputType getType();
+	
+	public abstract int getHeight();
+	
+	public int getX() {
+		int x = 0;
+		for (int i=0; i<parent.getPosX(); i++) {
+			x+=parent.getParent().getCols().get(i).getWidth();
+		}
+		if (parent.getOrientation()==Orientation.HOR) {
+			for (int i=0; i<posX; i++) {
+				x+=parent.getSpacing()+parent.getInputs().get(i).getWidth();
+			}
+			x+=parent.getSpacing();
+		}
+		return x+parent.getSpacing();
+	}
+	
+	public int getY() {
+		int y = 0;
+		for (int i=0; i<parent.getPosY()-1; i++) {
+			y+=parent.getParent().getCols().get(i).getHeight();
+		}
+		if (parent.getOrientation()==Orientation.VER) {
+			for (int i=0; i<posY; i++) {
+				y+=parent.getSpacing()+parent.getInputs().get(i).getHeight();
+			}
+			y+=parent.getSpacing();
+		}
+		return y+parent.getSpacing();
+	}
 
 	/** Getter
 	 * @return the name
@@ -98,5 +139,47 @@ public abstract class Input {
 	 */
 	public void setWidth(int width) {
 		this.width = width;
+	}
+
+	/** Getter
+	 * @return the posX
+	 */
+	public int getPosX() {
+		return posX;
+	}
+
+	/** Getter
+	 * @return the posY
+	 */
+	public int getPosY() {
+		return posY;
+	}
+
+	/** Setter
+	 * @param posX the posX to set
+	 */
+	void setPosX(int posX) {
+		this.posX = posX;
+	}
+
+	/** Setter
+	 * @param posY the posY to set
+	 */
+	void setPosY(int posY) {
+		this.posY = posY;
+	}
+
+	/** Getter
+	 * @return the parent
+	 */
+	Col getParent() {
+		return parent;
+	}
+
+	/** Setter
+	 * @param parent the parent to set
+	 */
+	void setParent(Col parent) {
+		this.parent = parent;
 	}
 }
