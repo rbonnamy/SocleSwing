@@ -1,5 +1,7 @@
 package fr.diginamic.composants.ui;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -55,6 +57,11 @@ public class DateField extends Input {
 			} catch (ParseException e) {
 				ErrorManager.manage("La date "+value+" n'est pas correcte. Vous ne pouvez pas vous en servir pour initialiser un DateField", e);
 			}
+		}
+		picker.setEditable(isEditable());
+		picker.setPreferredSize(new Dimension(getWidth(), 30));
+		if (!isEditable()) {
+			picker.setBackground(new Color(218, 243, 245));
 		}
 		picker.setFormats(new SimpleDateFormat(format));
 		return picker;

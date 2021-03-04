@@ -475,6 +475,20 @@ public class Console {
 	public Console println(String text, Color c, String... attributes) {
 		return println(HtmlUtils.toSpan(text, c, attributes));
 	}
+	
+	/** Permet d'aligner sur une même ligne plusieurs éléments HTML (ex: image et texte)
+	 * @param htmlElts éléments HTML à aligner verticalement
+	 * @return Console
+	 */
+	public Console print(String... htmlElts) {
+		StringBuilder htmlBuilder = new StringBuilder();
+		htmlBuilder.append("<table><tr>");
+		for (String texte: htmlElts) {
+			htmlBuilder.append("<td>").append(texte).append("</td>");
+		}
+		htmlBuilder.append("</tr></table>");
+		return println(htmlBuilder.toString());
+	}
 
 	/**
 	 * Efface le contenu de l'afficheur

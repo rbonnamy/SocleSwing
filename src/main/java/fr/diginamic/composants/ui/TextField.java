@@ -1,5 +1,8 @@
 package fr.diginamic.composants.ui;
 
+import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
@@ -20,6 +23,19 @@ public class TextField extends Input {
 		super(label, name);
 		this.value="";
 		setWidth(200);
+		setEditable(true);
+	}
+	
+	/** Constructeur
+	 * @param name nom du champ de saisie
+	 * @param label libellé du champ de saisie
+	 * @param editable indique si le champ est modifiable ou non
+	 */
+	public TextField(String label, String name, boolean editable) {
+		super(label, name);
+		this.value="";
+		setWidth(200);
+		setEditable(editable);
 	}
 	
 	/** Constructeur
@@ -31,13 +47,31 @@ public class TextField extends Input {
 		super(label, name);
 		this.value = value;
 		setWidth(200);
+		setEditable(true);
 	}
 	
+	/** Constructeur
+	 * @param name nom du champ de saisie
+	 * @param label libellé du champ de saisie
+	 * @param value valeur du champ de saisie
+	 * @param editable indique si le champ est modifiable ou non
+	 */
+	public TextField(String label, String name, String value, boolean editable) {
+		super(label, name);
+		this.value = value;
+		setWidth(200);
+		setEditable(editable);
+	}
 
 	@Override
 	public JComponent convert() {
 		JTextField textField = new JTextField();
 		textField.setText(value);
+		textField.setEditable(isEditable());
+		textField.setPreferredSize(new Dimension(getWidth(), 30));
+		if (!isEditable()) {
+			textField.setBackground(new Color(218, 243, 245));
+		}
 		return textField;
 	}
 

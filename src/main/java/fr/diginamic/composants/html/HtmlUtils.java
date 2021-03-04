@@ -1,6 +1,8 @@
 package fr.diginamic.composants.html;
 
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,9 @@ import com.google.common.collect.ObjectArrays;
  *
  */
 public class HtmlUtils {
+
+	private static final Insets WEST_INSETS = new Insets(0, 0, 0, 5);
+	private static final Insets EAST_INSETS = new Insets(0, 5, 0, 0);
 
 	/**
 	 * Encapsule un texte et ses attributs CSS dans un span avec une balise style
@@ -127,5 +132,37 @@ public class HtmlUtils {
 				.append(String.format("%02X", c.getBlue()));
 
 		return new AttributCss("color", builder.toString());
+	}
+
+	public static GridBagConstraints createGbc(int x, int y) {
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = x;
+		gbc.gridy = y;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+
+		gbc.anchor = (x == 0) ? GridBagConstraints.WEST : GridBagConstraints.EAST;
+		gbc.fill = (x == 0) ? GridBagConstraints.BOTH : GridBagConstraints.HORIZONTAL;
+
+		gbc.insets = (x == 0) ? WEST_INSETS : EAST_INSETS;
+		gbc.weightx = (x == 0) ? 0.1 : 1.0;
+		gbc.weighty = 1.0;
+		return gbc;
+	}
+	
+	public static GridBagConstraints createGbc(int x, int y, int position, int fill) {
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = x;
+		gbc.gridy = y;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+
+		gbc.anchor = position;
+		gbc.fill = fill;
+
+		gbc.insets = (x == 0) ? WEST_INSETS : EAST_INSETS;
+		gbc.weightx = (x == 0) ? 0.2 : 1.0;
+		gbc.weighty = 0.9;
+		return gbc;
 	}
 }

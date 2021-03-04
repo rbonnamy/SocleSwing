@@ -1,5 +1,6 @@
 package fr.diginamic.composants.ui;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class ComboBox extends Input {
 	public ComboBox(String label, String name, List<Selectable> selectables) {
 		super(label, name);
 		this.selectables = selectables;
+		setEditable(true);
 	}
 	
 	/** Constructeur
@@ -41,6 +43,7 @@ public class ComboBox extends Input {
 		super(label, name);
 		this.selectedItem = selectedItem;
 		this.selectables = selectables;
+		setEditable(true);
 	}
 	
 	@Override
@@ -49,8 +52,17 @@ public class ComboBox extends Input {
 		for (Selectable selectable: selectables) {
 			combobox.addItem(selectable);
 		}
-		combobox.setSelectedItem(selectedItem);
-		combobox.setEditable(true);
+		if (selectedItem!=null) {
+			combobox.setSelectedItem(selectedItem);
+		}
+		else {
+			combobox.setSelectedIndex(0);
+		}
+		combobox.setVisible(true);
+		combobox.setEditable(isEditable());
+		if (!isEditable()) {
+			combobox.setBackground(new Color(218, 243, 245));
+		}
 		return combobox;
 	}
 

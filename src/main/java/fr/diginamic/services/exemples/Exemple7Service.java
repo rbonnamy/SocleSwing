@@ -1,16 +1,12 @@
 package fr.diginamic.services.exemples;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 
 import fr.diginamic.composants.MenuService;
-import fr.diginamic.composants.ui.ComboBox;
 import fr.diginamic.composants.ui.Form;
-import fr.diginamic.composants.ui.Selectable;
-import fr.diginamic.services.exemples.entite.Vehicule;
+import fr.diginamic.composants.ui.TextField;
 
-public class Exemple6Service extends MenuService {
+public class Exemple7Service extends MenuService {
 
 	@Override
 	public void traitement() {
@@ -21,14 +17,9 @@ public class Exemple6Service extends MenuService {
 		// On commence par créér le formulaire vide
 		Form form = new Form();
 		
-		List<Selectable> vehicules = new ArrayList<>();
-		vehicules.add(new Vehicule(1L, "AA-552-CD", "Peugeot", "208"));
-		vehicules.add(new Vehicule(2L, "AW-227-XE", "Peugeot", "3008"));
-		vehicules.add(new Vehicule(3L, "XX-131-XT", "Peugeot", "3008"));
+		form.addInput(new TextField("Nom:", "nom"));
+		form.addInput(new TextField("Prénom:", "prenom", false));
 		
-		// Champ de type liste de sélection
-		form.addInput(new ComboBox("Liste de véhicules:", "vehicule", vehicules, vehicules.get(2)));
-
 		// Création d'un validator qui stocke les règles de gestion
 		Exemple6FormValidator validator = new Exemple6FormValidator();
 		
@@ -39,9 +30,7 @@ public class Exemple6Service extends MenuService {
 
 		// Récupéation des informations saisies
 		if (valide) {
-			console.print("Vous vous <b>appelez</b> ").println("<span style='color:red'>"+form.getValue("champ2")+" "+form.getValue("champ1")+"</span>");
-			console.println("Date de naissance :"+form.getValue("dateNaissance"));
-			console.println("Voiture sélectionnée :"+form.getValue("vehicule"));
+			console.print("Vous vous <b>appelez</b> ").println("<span style='color:red'>"+form.getValue("nom")+" "+form.getValue("prenom")+"</span>");
 		}
 	}
 
