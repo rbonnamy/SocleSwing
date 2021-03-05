@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -29,7 +31,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import fr.diginamic.Launcher;
 import fr.diginamic.composants.error.ErrorManager;
 import fr.diginamic.composants.html.HtmlUtils;
 import fr.diginamic.composants.ui.Form;
@@ -44,6 +45,9 @@ import fr.diginamic.composants.validator.FormValidator;
  *
  */
 public class Console {
+
+	/** holder */
+	public static final List<Boolean> holder = new LinkedList<Boolean>();
 
 	/**
 	 * FONT_18 : police par défaut utilisée pour la construction de tous les
@@ -212,11 +216,11 @@ public class Console {
 		// saisie par l'utilisateur de la valeur demandée.
 		annuler.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				form.setValidated(true);
+				synchronized (Console.holder) {
 
-				synchronized (Launcher.holder) {
-
-					Launcher.holder.add(false);
-					Launcher.holder.notify();
+					Console.holder.add(false);
+					Console.holder.notify();
 				}
 				fenetreRecherche.setVisible(false);
 			}
@@ -240,15 +244,16 @@ public class Console {
 		valider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				synchronized (Launcher.holder) {
+				synchronized (Console.holder) {
+					form.setValidated(true);
 					for (String name : fields.keySet()) {
 						Input input = form.getInput(name);
 						input.setValue(fields.get(name));
 					}
 					if (formValidator == null || (formValidator != null && formValidator.validate(form))) {
 						fenetreRecherche.setVisible(false);
-						Launcher.holder.add(true);
-						Launcher.holder.notify();
+						Console.holder.add(true);
+						Console.holder.notify();
 					}
 				}
 
@@ -258,16 +263,16 @@ public class Console {
 		fenetreRecherche.getRootPane().setDefaultButton(valider);
 		fenetreRecherche.setVisible(true);
 
-		synchronized (Launcher.holder) {
+		synchronized (Console.holder) {
 			// wait for input from field
-			while (Launcher.holder.isEmpty()) {
+			while (Console.holder.isEmpty()) {
 				try {
-					Launcher.holder.wait();
+					Console.holder.wait();
 				} catch (InterruptedException e) {
 					throw new RuntimeException(e);
 				}
 			}
-			return Launcher.holder.remove(0);
+			return Console.holder.remove(0);
 		}
 	}
 
@@ -329,10 +334,10 @@ public class Console {
 		annuler.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				synchronized (Launcher.holder) {
+				synchronized (Console.holder) {
 
-					Launcher.holder.add(false);
-					Launcher.holder.notify();
+					Console.holder.add(false);
+					Console.holder.notify();
 				}
 				fenetreRecherche.setVisible(false);
 			}
@@ -344,9 +349,9 @@ public class Console {
 		valider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				synchronized (Launcher.holder) {
-					Launcher.holder.add(true);
-					Launcher.holder.notify();
+				synchronized (Console.holder) {
+					Console.holder.add(true);
+					Console.holder.notify();
 
 				}
 				fenetreRecherche.setVisible(false);
@@ -357,16 +362,16 @@ public class Console {
 		fenetreRecherche.getRootPane().setDefaultButton(valider);
 		fenetreRecherche.setVisible(true);
 
-		synchronized (Launcher.holder) {
+		synchronized (Console.holder) {
 			// wait for input from field
-			while (Launcher.holder.isEmpty()) {
+			while (Console.holder.isEmpty()) {
 				try {
-					Launcher.holder.wait();
+					Console.holder.wait();
 				} catch (InterruptedException e) {
 					throw new RuntimeException(e);
 				}
 			}
-			return Launcher.holder.remove(0);
+			return Console.holder.remove(0);
 		}
 	}
 

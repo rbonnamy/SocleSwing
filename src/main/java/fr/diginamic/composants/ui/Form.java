@@ -49,6 +49,9 @@ public class Form implements Iterable<Input> {
 	 * @return String
 	 */
 	public <T> T getValue(String name) {
+		if (!isValidated()) {
+			ErrorManager.manage("Vous devez d'abord afficher et valider le formulaire (console.input) avant de récupérer les résultats.");
+		}
 		return getInput(name).getValue();
 	}
 
@@ -76,5 +79,19 @@ public class Form implements Iterable<Input> {
 	 */
 	public void setInputs(List<Input> inputs) {
 		this.inputs = inputs;
+	}
+
+	/** Getter
+	 * @return the validated
+	 */
+	public boolean isValidated() {
+		return validated;
+	}
+
+	/** Setter
+	 * @param validated the validated to set
+	 */
+	public void setValidated(boolean validated) {
+		this.validated = validated;
 	}
 }
