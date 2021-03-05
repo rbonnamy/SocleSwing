@@ -27,7 +27,7 @@ public class Exemple6Service extends MenuService {
 		vehicules.add(new Vehicule(3, "XX-131-XT", "Peugeot", "3008"));
 		
 		// Champ de type liste de sélection
-		form.addInput(new ComboBox("Liste de véhicules:", "vehicule", vehicules, vehicules.get(3)));
+		form.addInput(new ComboBox("Liste de véhicules:", "vehicule", vehicules, vehicules.get(2)));
 
 		// Création d'un validator qui stocke les règles de gestion
 		Exemple6FormValidator validator = new Exemple6FormValidator();
@@ -39,9 +39,7 @@ public class Exemple6Service extends MenuService {
 
 		// Récupéation des informations saisies
 		if (valide) {
-			console.print("Vous vous <b>appelez</b> ").println("<span style='color:red'>"+form.getValue("champ2")+" "+form.getValue("champ1")+"</span>");
-			console.println("Date de naissance :"+form.getValue("dateNaissance"));
-			console.println("Voiture sélectionnée :"+form.getValue("vehicule"));
+			console.print(""+form.getValue("vehicule"));
 		}
 	}
 

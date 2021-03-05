@@ -3,6 +3,7 @@ package fr.diginamic.composants.ui;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -20,7 +21,7 @@ public class ComboBox extends Input {
 	private Selectable selectedItem;
 	
 	/** value */
-	private int id;
+	private Integer id;
 	
 	/** Constructeur
 	 * @param label libellé
@@ -31,6 +32,7 @@ public class ComboBox extends Input {
 		super(label, name);
 		this.selectables = selectables;
 		setEditable(true);
+		setWidth(200);
 	}
 	
 	/** Constructeur
@@ -44,6 +46,7 @@ public class ComboBox extends Input {
 		this.selectedItem = selectedItem;
 		this.selectables = selectables;
 		setEditable(true);
+		setWidth(200);
 	}
 	
 	@Override
@@ -67,13 +70,17 @@ public class ComboBox extends Input {
 	}
 
 	@Override
-	public String getValue() {
-		return Long.toString(id);
+	public Selectable getValue() {
+		Optional<Selectable> opt = selectables.stream().filter(s->s.getId().equals(this.selectedItem.getId())).findFirst();
+		if (opt.isPresent()) {
+			return opt.get();
+		}
+		return null;
 	}
 	
 	@Override
 	public void setValue(JComponent component) {
-		this.id=((Selectable)((JComboBox<Selectable>)component).getSelectedItem()).getId();
+		this.selectedItem=(Selectable)((JComboBox<Selectable>)component).getSelectedItem();
 	}
 
 	@Override

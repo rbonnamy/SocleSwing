@@ -6,7 +6,7 @@ import fr.diginamic.composants.ui.Selectable;
 
 public class Vehicule implements Selectable {
 
-	private int id;
+	private Integer id;
 	private String immatriculation;
 	private String marque;
 	private String modele;
@@ -43,13 +43,13 @@ public class Vehicule implements Selectable {
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	/**
