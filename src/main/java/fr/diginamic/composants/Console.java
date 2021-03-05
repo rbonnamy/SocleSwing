@@ -107,7 +107,6 @@ public class Console {
 	public boolean input(String titreFormulaire, final Form form, final FormValidator formValidator) {
 
 		JFrame fenetreRecherche = new JFrame(titreFormulaire);
-
 		// Lorsqu'on ferme une fenêtre secondaire on ne souhaite pas arrêter
 		// l'application
 		// mais simplement la masquer.
