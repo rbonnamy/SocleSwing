@@ -4,11 +4,11 @@ package fr.diginamic.composants.ui;
  * @author RichardBONNAMY
  *
  */
-public interface Selectable {
+public interface Selectable<T> {
 
 	/** Retourne l'identifiant de l'objet. 
 	 * C'est cet id qui sera transmis lorsque l'utilisateur aura fait sa sélection.
 	 * @return Long
 	 */
-	Integer getId();
+	T getId();
 }

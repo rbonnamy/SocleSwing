@@ -14,6 +14,8 @@ import java.lang.annotation.Target;
 public @interface HtmlTable {
 
 	String cssClass() default "table";
+	String headerClass() default "";
+	
 	String style() default "";
 	int border() default 0;
 	String id();

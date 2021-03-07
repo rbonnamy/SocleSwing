@@ -31,10 +31,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import fr.diginamic.composants.annotations.TableGenerator;
 import fr.diginamic.composants.error.ErrorManager;
 import fr.diginamic.composants.html.HtmlUtils;
 import fr.diginamic.composants.ui.Form;
 import fr.diginamic.composants.ui.Input;
+import fr.diginamic.composants.ui.Selectable;
 import fr.diginamic.composants.validator.FormValidator;
 
 /**
@@ -429,16 +431,21 @@ public class Console {
 	 */
 	public Console print(String text) {
 
-		String textModifie = text;
+		String textModifie = traiteImages(text);
+		appendToPane(textModifie);
+		contentpane.append(textModifie);
+		return this;
+	}
 
+	private String traiteImages(String textModifie) {
 		boolean startWithTag = false;
-		if (text.startsWith("<")) {
+		if (textModifie.startsWith("<")) {
 			startWithTag = true;
 		}
 
 		// Si le texte contient des images, on modifie les sources
-		if (text.contains("img") && text.contains("src")) {
-			Document doc = Jsoup.parse(text);
+		if (textModifie.contains("img") && textModifie.contains("src")) {
+			Document doc = Jsoup.parse(textModifie);
 			Elements elts = doc.getElementsByAttribute("src");
 			if (elts != null && elts.size() > 0) {
 				for (Element elt : elts) {
@@ -456,9 +463,7 @@ public class Console {
 				textModifie = doc.body().ownText() + " " + doc.body().children().toString();
 			}
 		}
-		appendToPane(textModifie);
-		contentpane.append(textModifie);
-		return this;
+		return textModifie;
 	}
 	
 	/**
@@ -520,7 +525,7 @@ public class Console {
 	 * @param htmlElts éléments HTML à aligner verticalement
 	 * @return Console
 	 */
-	public Console print(String... htmlElts) {
+	public Console printAlign(String... htmlElts) {
 		StringBuilder htmlBuilder = new StringBuilder();
 		htmlBuilder.append("<table><tr>");
 		for (String texte : htmlElts) {
@@ -542,8 +547,8 @@ public class Console {
 	 * @param obj objet à afficher
 	 * @return {@link Console}
 	 */
-	public Console println(Object obj) {
-		return print(obj).print("<br>");
+	public Console println(List<? extends Selectable<?>> selectables, Class<? extends Selectable<?>> classe) {
+		return print(TableGenerator.toHtml(selectables, classe)).print("<br>");
 	}
 
 
@@ -567,6 +572,23 @@ public class Console {
 			doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()), html);
 		} catch (IOException | BadLocationException e) {
 			ErrorManager.manage(e.getMessage(), e);
+		}
+		return this;
+	}
+	
+	/**
+	 * Ajoute du HTML dans le panneau
+	 * 
+	 * @param html html
+	 * @return Console
+	 */
+	public Console modifyTable(String id, List<? extends Selectable<?>> entites, Class<? extends Selectable<?>> classe) {
+		HTMLDocument doc = (HTMLDocument) afficheur.getStyledDocument();
+		javax.swing.text.Element elt = doc.getElement(id);
+		try {
+			doc.setOuterHTML(elt, traiteImages(TableGenerator.toHtml(entites, classe)));
+		} catch (BadLocationException | IOException e) {
+			ErrorManager.manage("Erreur lors de la modification du code HTML de la table id="+id, e);
 		}
 		return this;
 	}
